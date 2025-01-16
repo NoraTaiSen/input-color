@@ -1,4 +1,4 @@
-local Lib = {
+local ColorLib = {
     Colors = {
         ["Green"] = "0,255,0", -- color in rgb
         ["Cyan"] = "33, 161, 163"
@@ -6,7 +6,7 @@ local Lib = {
 }
 
 -- Function to change colors in the DevConsole
-Lib.ChangeColor = function() 
+ColorLib.ChangeColor = function() 
     game:GetService("RunService").Heartbeat:Connect(function()
         if game:GetService("CoreGui"):FindFirstChild("DevConsoleMaster") then 
             for _, v in pairs(game:GetService("CoreGui"):FindFirstChild("DevConsoleMaster"):GetDescendants()) do 
@@ -19,13 +19,13 @@ Lib.ChangeColor = function()
 end
 
 -- Function to print colored text to the console
-Lib.print = function(color, text, size)
-    if not Lib.Colors[color] then 
+ColorLib.print = function(color, text, size)
+    if not ColorLib.Colors[color] then 
         warn("Color was not found!")
         return 
     end
     
-    local Text = '<font color="rgb(' .. Lib.Colors[color] .. ')"'
+    local Text = '<font color="rgb(' .. ColorLib.Colors[color] .. ')"'
     if size then
         Text = Text .. ' size="' .. tostring(size) .. '"'
     end
@@ -34,7 +34,7 @@ Lib.print = function(color, text, size)
 end
 
 -- Call the ChangeColor function to initialize the color change
-Lib.ChangeColor()
+ColorLib.ChangeColor()
 
--- Return the Lib table so it can be used by other scripts
-return Lib
+-- Return the ColorLib table so it can be used by other scripts
+return ColorLib
