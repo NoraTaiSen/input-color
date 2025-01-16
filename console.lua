@@ -1,4 +1,4 @@
-local Modules = {
+local Lib = {
     Colors = {
         ["Green"] = "0,255,0", 
         ["Cyan"] = "33, 161, 163",
@@ -18,17 +18,19 @@ local Modules = {
         ["Indigo"] = "75,0,130", 
         ["Teal"] = "0,128,128", 
         ["Violet"] = "238,130,238"
-    }, 
+    },
+    
     Services = {
         RunService = game:GetService("RunService"),
         CoreGui = game:GetService("CoreGui")
     }
 }
 
-Modules.ChangeColor = function() 
-    game:GetService("RunService").Heartbeat:Connect(function()
-        if game:GetService("CoreGui"):FindFirstChild("DevConsoleMaster") then 
-            for _, v in pairs(game:GetService("CoreGui"):FindFirstChild("DevConsoleMaster"):GetDescendants()) do 
+-- Function to change colors in the DevConsole
+Lib.ChangeColor = function() 
+    Lib.Services.RunService.Heartbeat:Connect(function()
+        if Lib.Services.CoreGui:FindFirstChild("DevConsoleMaster") then 
+            for _, v in pairs(Lib.Services.CoreGui:FindFirstChild("DevConsoleMaster"):GetDescendants()) do 
                 if v:IsA("TextLabel") then 
                     v.RichText = true 
                 end 
@@ -37,7 +39,8 @@ Modules.ChangeColor = function()
     end)
 end
 
-Modules.LoadingBar = function(watermark, color, delay, loadingsymbol)
+-- Function to create a loading bar with specified watermark and color
+Lib.LoadingBar = function(watermark, color, delay, loadingsymbol)
     delay = delay or 0.1 
     local Text = watermark .. tostring(math.random(500, 20000))
     print(Text)
@@ -46,7 +49,7 @@ Modules.LoadingBar = function(watermark, color, delay, loadingsymbol)
     local progress = ""
 
     repeat task.wait()
-        for _, label in pairs(Modules.Services.CoreGui:FindFirstChild("DevConsoleMaster"):GetDescendants()) do 
+        for _, label in pairs(Lib.Services.CoreGui:FindFirstChild("DevConsoleMaster"):GetDescendants()) do 
             if label:IsA("TextLabel") and string.find(label.Text:lower(), Text:lower()) then 
                 loadingLabel = label 
                 break
@@ -58,20 +61,21 @@ Modules.LoadingBar = function(watermark, color, delay, loadingsymbol)
 
     for i = 1, 50 do
         progress = progress .. loadingsymbol
-        loadingLabel.Text = string.format("<font color='rgb(%s)' size='15'>[%s] [%d%% loaded] %s</font>", Modules.Colors["White"], watermark, i * 2, progress)
+        loadingLabel.Text = string.format("<font color='rgb(%s)' size='15'>[%s] [%d%% loaded] %s</font>", Lib.Colors["White"], watermark, i * 2, progress)
         task.wait(delay)
     end
 
-    loadingLabel.Text = string.format("<font color='rgb(%s)' size='15'>[%s] Successfully loaded in %ds</font>", Modules.Colors[color], watermark, os.time() - start)
+    loadingLabel.Text = string.format("<font color='rgb(%s)' size='15'>[%s] Successfully loaded in %ds</font>", Lib.Colors[color], watermark, os.time() - start)
 end
 
-Modules.print = function(color, text, size)
-    if not Modules.Colors[color] then 
+-- Function to print colored text to the console
+Lib.print = function(color, text, size)
+    if not Lib.Colors[color] then 
         warn("Color was not found!")
         return 
     end
 
-    local Text = '<font color="rgb(' .. Modules.Colors[color] .. ')"'
+    local Text = '<font color="rgb(' .. Lib.Colors[color] .. ')"'
     if size then
         Text = Text .. ' size="' .. tostring(size) .. '"'
     end
@@ -79,7 +83,4 @@ Modules.print = function(color, text, size)
     print(Text)
 end
 
-Modules.ChangeColor()
----Modules.print("Green", "Lol")
----Modules.print("Green", "Lol with size 20", 20)
----Modules.LoadingBar("✅", "Cyan", 0.005, "#", "|")
+return Lib
