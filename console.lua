@@ -1,4 +1,4 @@
-local Lib = {
+local Modules = {
     Colors = {
         ["Green"] = "0,255,0", 
         ["Cyan"] = "33, 161, 163",
@@ -27,7 +27,7 @@ local Lib = {
 }
 
 -- Function to change colors in the DevConsole
-Lib.ChangeColor = function() 
+Modules.ChangeColor = function() 
     Lib.Services.RunService.Heartbeat:Connect(function()
         if Lib.Services.CoreGui:FindFirstChild("DevConsoleMaster") then 
             for _, v in pairs(Lib.Services.CoreGui:FindFirstChild("DevConsoleMaster"):GetDescendants()) do 
@@ -40,7 +40,7 @@ Lib.ChangeColor = function()
 end
 
 -- Function to create a loading bar with specified watermark and color
-Lib.LoadingBar = function(watermark, color, delay, loadingsymbol)
+Modules.LoadingBar = function(watermark, color, delay, loadingsymbol)
     delay = delay or 0.1 
     local Text = watermark .. tostring(math.random(500, 20000))
     print(Text)
@@ -69,7 +69,7 @@ Lib.LoadingBar = function(watermark, color, delay, loadingsymbol)
 end
 
 -- Function to print colored text to the console
-Lib.print = function(color, text, size)
+Modules.print = function(color, text, size)
     if not Lib.Colors[color] then 
         warn("Color was not found!")
         return 
@@ -83,4 +83,4 @@ Lib.print = function(color, text, size)
     print(Text)
 end
 
-return Lib
+return Modules
